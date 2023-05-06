@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
  **/
 class ImpressionTracker(
     private val recyclerView: RecyclerView,
-    private val impressionTrackerListener: ImpressionTrackerListener,
-    private val itemVisibilityPercentage: Int = 50
+    private val itemVisibilityPercentage: Int = 50,
+    private val impressionTrackerListener: ImpressionTrackerListener
 ) {
     private var isFistLoad = true
     private val globalVisibleRect = Rect()
@@ -56,6 +56,12 @@ class ImpressionTracker(
 
                 if (segmentView != null) {
                     val segmentVisibilityPercentage = getVisibleHeightPercentage(segmentView)
+
+                    impressionTrackerListener.onVerticalItemVisibility(
+                        segmentVisibilityPercentage,
+                        pos
+                    )
+
                     if (segmentVisibilityPercentage >= itemVisibilityPercentage) {
                         impressionTrackerListener.onVerticalItem(
                             pos,
@@ -131,6 +137,13 @@ class ImpressionTracker(
                     val horizontalView = innerLayoutManager.findViewByPosition(entityPosition)
                     if (horizontalView != null) {
                         val entityVisibilityPercentage = getVisibleWidthPercentage(horizontalView)
+
+                        impressionTrackerListener.onHorizontalItemVisibility(
+                            entityVisibilityPercentage,
+                            parentPosition,
+                            entityPosition
+                        )
+
                         if (entityVisibilityPercentage >= innerVisibilityPercentage) {
                             impressionTrackerListener.onHorizontalItem(
                                 parentPosition,

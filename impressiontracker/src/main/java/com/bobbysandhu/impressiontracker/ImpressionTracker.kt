@@ -4,6 +4,8 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import java.lang.IllegalArgumentException
 
 /**
  * A helper class to track impressions based on the visibility percentage.
@@ -81,6 +83,7 @@ class ImpressionTracker(
 
     /** Call this method to start tracking impressions. */
     fun startTracking() {
+        validate()
         recyclerView.addOnScrollListener(scrollListener)
     }
 
@@ -193,6 +196,12 @@ class ImpressionTracker(
             viewVisibleWidthPercentage
         } else {
             0.0
+        }
+    }
+
+    private fun validate() {
+        if (recyclerView.layoutManager is StaggeredGridLayoutManager) {
+            throw IllegalArgumentException("${recyclerView.layoutManager} is not supported")
         }
     }
 }

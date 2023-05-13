@@ -1,6 +1,7 @@
 package com.bobbysandhu.impressiontracker
 
 import android.graphics.Rect
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -140,7 +141,7 @@ class ImpressionTracker(
                     val horizontalView = innerLayoutManager.findViewByPosition(entityPosition)
                     if (horizontalView != null) {
                         val entityVisibilityPercentage = getVisibleWidthPercentage(horizontalView)
-
+Log.d("aaabbb", "$entityVisibilityPercentage")
                         impressionTrackerListener.onHorizontalItemVisibility(
                             entityVisibilityPercentage,
                             parentPosition,

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.impressiontrackingrecyclerview.databinding.ActivityMainBinding
+import com.impressiontrackingrecyclerview.horizontalandvertical.HorizontalRecyclerViewImpressionTrackingActivity
 import com.impressiontrackingrecyclerview.verticalrecycler.VerticalRecyclerViewImpressionTrackingActivity
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +22,12 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         binding.btnVerticalImpression.setOnClickListener {
             Intent(this, VerticalRecyclerViewImpressionTrackingActivity::class.java).apply {
+                startActivity(this)
+            }
+        }
+
+        binding.btnHorizontalImpression.setOnClickListener {
+            Intent(this, HorizontalRecyclerViewImpressionTrackingActivity::class.java).apply {
                 startActivity(this)
             }
         }

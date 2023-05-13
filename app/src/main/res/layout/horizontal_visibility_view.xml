@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="140dp"
+    android:layout_height="100dp"
+    android:layout_margin="10dp"
+    android:background="@color/cardview_shadow_start_color">
+
+    <TextView
+        android:id="@+id/textIndex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        tools:text="3" />
+
+    <TextView
+        android:id="@+id/textVisibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@+id/textIndex"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@id/textIndex"
+        tools:text="100" />
+
+</RelativeLayout>

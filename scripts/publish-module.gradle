@@ -45,7 +45,7 @@ afterEvaluate {
                 pom {
                     name = PUBLISH_ARTIFACT_ID
                     description = 'A library to reyclerview impression on scroll.'
-                    url = 'https://github.com/BobbySandhu/unified-date-time-picker-kt'
+                    url = 'https://github.com/BobbySandhu/impression-tracker'
                     licenses {
                         license {
                             name = 'License'
@@ -56,7 +56,6 @@ afterEvaluate {
                         developer {
                             id = 'BobbySandhu'
                             name = 'Bobby Sandhu'
-                            //email = 'marton@getstream.io'
                         }
                         // Add all other devs here...
                     }
@@ -64,9 +63,9 @@ afterEvaluate {
                     // Version control info - if you're using GitHub, follow the
                     // format as seen here
                     scm {
-                        connection = 'scm:git:github.com/BobbySandhu/unified-date-time-picker-kt.git'
-                        developerConnection = 'scm:git:ssh://github.com:BobbySandhu/unified-date-time-picker-kt.git'
-                        url = 'https://github.com/BobbySandhu/unified-date-time-picker-kt'
+                        connection = 'scm:git:github.com/BobbySandhu/impression-tracker.git'
+                        developerConnection = 'scm:git:ssh://github.com:BobbySandhu/impression-tracker.git'
+                        url = 'https://github.com/BobbySandhu/impression-tracker-kt'
                     }
                 }
             }

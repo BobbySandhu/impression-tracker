@@ -3,7 +3,6 @@ package com.impressiontrackingrecyclerview.horizontalandvertical
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +10,6 @@ import com.bobbysandhu.impressiontracker.ImpressionTracker
 import com.bobbysandhu.impressiontracker.ImpressionTrackerListener
 import com.impressiontrackingrecyclerview.databinding.ActivityVerticalRecyclerViewImpressionTrackingBinding
 import com.impressiontrackingrecyclerview.verticalrecycler.UiData
-import kotlinx.coroutines.delay
 
 class HorizontalRecyclerViewImpressionTrackingActivity : AppCompatActivity() {
 
@@ -55,7 +53,7 @@ class HorizontalRecyclerViewImpressionTrackingActivity : AppCompatActivity() {
                 /* activating/adding inner horizontal recycler impression tracking.
                 * horizontal item's callback is received in onHorizontalItemVisibility() and you
                 * will have to override it. */
-                if (viewHolder is VerticalRecyclerAdapter.VisibilityView) {
+                if (viewHolder is VerticalRecyclerAdapter.VisibilityViewHolder) {
                     impressionTracker?.trackHorizontalRecyclerView(viewHolder.binding.recyclerViewInner, 40, position)
                 }
             }
@@ -73,10 +71,9 @@ class HorizontalRecyclerViewImpressionTrackingActivity : AppCompatActivity() {
                 parentPosition: Int,
                 childPosition: Int
             ) {
+                //updating data in inner recyclerview
                 val innerData = items[parentPosition].innerData
                 val uiData = innerData[childPosition].copy(visibility = visibility.toInt())
-                innerData[childPosition] = uiData
-                items[parentPosition].innerData = innerData
 
                 adapter?.updateHorizontalItem(uiData, childPosition, parentPosition)
             }

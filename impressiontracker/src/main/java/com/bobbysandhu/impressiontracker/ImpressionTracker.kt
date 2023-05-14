@@ -1,7 +1,6 @@
 package com.bobbysandhu.impressiontracker
 
 import android.graphics.Rect
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,7 @@ import java.lang.IllegalArgumentException
 
 /**
  * A helper class to track impressions based on the visibility percentage.
- * Author: Bobby Sandhu
+ * @author: Bobby Sandhu
  **/
 class ImpressionTracker(
     private val recyclerView: RecyclerView,
@@ -34,9 +33,9 @@ class ImpressionTracker(
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
-            /* for initial load after adapter set this method works, here we have handled a case
-            * after app open to send event for initial visible segment (user hasn't scrolled yet).
-            **/
+            /* for initial load after adapter is set this method works, here we have handled a case
+            * after app open to track vertical recyclerview's visible items (user hasn't scrolled yet).
+            */
             if (isFistLoad) {
                 checkForScroll()
                 isFistLoad = false
@@ -93,6 +92,51 @@ class ImpressionTracker(
         recyclerView.removeOnScrollListener(scrollListener)
     }
 
+    /** This method tracks the events for the entities (horizontal recycler view items) when vertical
+     * recycler view (segments) loads for the first time as user has not scrolled yet manually.
+     * It also prevents the calculation on every vertical scroll input again. */
+    private fun trackEntityForInitialLoad(
+        innerLayoutManager: RecyclerView.LayoutManager?,
+        innerVisibilityPercentage: Int,
+        parentPosition: Int
+    ) {
+        try {
+            if (innerLayoutManager != null) {
+                val entityFirstPosition =
+                    (innerLayoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                val entityLastPosition =
+                    innerLayoutManager.findLastVisibleItemPosition()
+
+                /* entity's visible item calculation */
+                for (entityPosition in entityFirstPosition..entityLastPosition) {
+                    val horizontalView = innerLayoutManager.findViewByPosition(entityPosition)
+                    if (horizontalView != null) {
+                        val entityVisibilityPercentage = getVisibleWidthPercentage(horizontalView)
+
+                        impressionTrackerListener.onHorizontalItemVisibility(
+                            entityVisibilityPercentage,
+                            parentPosition,
+                            entityPosition
+                        )
+
+                        if (entityVisibilityPercentage >= innerVisibilityPercentage) {
+                            impressionTrackerListener.onHorizontalItem(
+                                parentPosition,
+                                entityPosition
+                            )
+                        }
+                    }
+                }
+            }
+        } catch (indexOutOfBoundException: ArrayIndexOutOfBoundsException) {
+            indexOutOfBoundException.printStackTrace()
+        } catch (npe: NullPointerException) {
+            npe.printStackTrace()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     fun trackHorizontalRecyclerView(
         innerRecyclerView: RecyclerView,
         innerVisibilityPercentage: Int,
@@ -118,51 +162,6 @@ class ImpressionTracker(
                     }
                 }
             })
-        }
-    }
-
-    /** This method tracks the events for the entities (horizontal recycler view items) when vertical
-     * recycler view (segments) loads for the first time as user has not scrolled yet manually.
-     * It also prevents the calculation on every vertical scroll input again. */
-    private fun trackEntityForInitialLoad(
-        innerLayoutManager: RecyclerView.LayoutManager?,
-        innerVisibilityPercentage: Int,
-        parentPosition: Int
-    ) {
-        try {
-            if (innerLayoutManager != null) {
-                val entityFirstPosition =
-                    (innerLayoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                val entityLastPosition =
-                    innerLayoutManager.findLastVisibleItemPosition()
-
-                /* entity's visible item calculation */
-                for (entityPosition in entityFirstPosition..entityLastPosition) {
-                    val horizontalView = innerLayoutManager.findViewByPosition(entityPosition)
-                    if (horizontalView != null) {
-                        val entityVisibilityPercentage = getVisibleWidthPercentage(horizontalView)
-Log.d("aaabbb", "$entityVisibilityPercentage")
-                        impressionTrackerListener.onHorizontalItemVisibility(
-                            entityVisibilityPercentage,
-                            parentPosition,
-                            entityPosition
-                        )
-
-                        if (entityVisibilityPercentage >= innerVisibilityPercentage) {
-                            impressionTrackerListener.onHorizontalItem(
-                                parentPosition,
-                                entityPosition
-                            )
-                        }
-                    }
-                }
-            }
-        } catch (indexOutOfBoundException: ArrayIndexOutOfBoundsException) {
-            indexOutOfBoundException.printStackTrace()
-        } catch (npe: NullPointerException) {
-            npe.printStackTrace()
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 

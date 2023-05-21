@@ -49,7 +49,7 @@ afterEvaluate {
                     licenses {
                         license {
                             name = 'License'
-                            url = 'https://github.com/BobbySandhu/unified-date-time-picker-kt/LICENSE'
+                            url = 'https://github.com/BobbySandhu/impression-tracker/LICENSE'
                         }
                     }
                     developers {

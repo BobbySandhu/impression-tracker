@@ -122,7 +122,7 @@ repositories { // Add this to the end of any existing repositories
 
 // app level dependencies section
 dependencies {
-	implementation 'io.github.bobbysandhu:unified-date-time-picker-kt:1.1.0'
+	implementation 'io.github.bobbysandhu:WIP'
 }
 ```
 

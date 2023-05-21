@@ -3,6 +3,15 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+ext {
+    // Provide your own coordinates here
+    PUBLISH_GROUP_ID = 'com.bobbysandhu'
+    PUBLISH_VERSION = '1.0.0'
+    PUBLISH_ARTIFACT_ID = 'impression-tracker'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
 android {
     namespace 'com.bobbysandhu.impressiontracker'
     compileSdk 33
@@ -28,8 +37,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
-    namespace 'com.bobby-sandhu.impressiontracker'
 }
 
 dependencies {

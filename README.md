@@ -122,7 +122,7 @@ repositories { // Add this to the end of any existing repositories
 
 // app level dependencies section
 dependencies {
-	implementation 'io.github.bobbysandhu:WIP'
+	implementation 'io.github.bobbysandhu:impression-tracker:1.0.0'
 }
 ```
 
